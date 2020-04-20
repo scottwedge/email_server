@@ -1,0 +1,14 @@
+Greetings {username},
+
+    Thank you for downloading LiftsKit! We have a lot going on around here now and in the future!
+
+        Learn more about the App & View Programs created by the Community:
+            www.liftskit.com
+
+        Learn more about the Author:
+            www.travislinkey.com
+
+    We hope you have a great time using the App, have fun and be safe!
+
+Best Regards,
+    LiftsKit Team

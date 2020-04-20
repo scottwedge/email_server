@@ -1,0 +1,12 @@
+Hello {username},
+
+    Please find below the requested Account Recovery Information:
+
+    Username:
+        {username}
+
+    Password:
+        {password}
+
+Best Regards,
+    LiftsKit Team
