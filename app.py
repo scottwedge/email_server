@@ -15,15 +15,11 @@ sender = 'no.reply.gymdiligence@gmail.com'
 mail = smtplib.SMTP('smtp.gmail.com', 587)
 mail.ehlo()
 
-
 app = Flask(__name__)
 
-if __name__ == "__main__":
-    # login to server
-    mail.starttls()
-    mail.login(sender, 'Heyheyuu1')
-
-    app.run(port=5000)
+# login to server
+mail.starttls()
+mail.login(sender, 'Heyheyuu1')
 
 # Email Helper Functions
 def read_file_and_fill_template(file_path, user_info_dict):
@@ -98,3 +94,5 @@ def send_email_recovery(receiver):
         return 'Password Recovery Email Sent Successfully'
     return 'Error - No User info Found in DB'
 
+
+app.run(port=5000)
