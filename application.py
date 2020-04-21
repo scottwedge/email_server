@@ -12,7 +12,8 @@ workouts_performed_url_base = "https://quickstart-1578522372773.firebaseio.com/w
 
 # Gmail Info
 sender = 'no.reply.gymdiligence@gmail.com'
-mail = smtplib.SMTP('smtp.gmail.com', 587)
+mail = smtplib.SMTP()
+mail.connect('smtp.gmail.com', 587)
 mail.ehlo()
 
 # create the flask application
@@ -27,7 +28,7 @@ def read_file_and_fill_template(file_path, user_info_dict):
     ''' open the file, scanning line by line, replacing each template string
         with the values from the user_info_dictionary '''
     content_string = ''
-    
+
     with open(file_path) as f:
         for line in f.readlines():
             if '{' in line:
@@ -41,13 +42,7 @@ def read_file_and_fill_template(file_path, user_info_dict):
 
 def send_email(receiver, content):
     print(f'\n---- Sending Email To: {receiver} ----')
-
-    try:
-        mail.sendmail(sender, receiver, content)
-    except Exception as e:
-        print(e)
-        return
-    
+    mail.sendmail(sender, receiver, content)
     print(f'\n---- Email Sent ----')
 
 def get_receivers_info(receiver):
@@ -78,20 +73,26 @@ def send_confirmation_email(receiver, username):
 
     # fill the template and send the email
     content = read_file_and_fill_template(greeting_file_path, { 'username': username })
-    send_email(receiver, content)
+    try:
+        send_email(receiver, content)
+    except Exception as e:
+        return str(e)
     return 'Confirmation Email Sent Successfully'
 
 @application.route('/send_recovery_email/<string:receiver>/')
 def send_email_recovery(receiver):
     email_recovery_file_path = 'email_templates/recovery_template.txt'
-    
+
     # get the receivers info from the db
     user_info_dict = get_receivers_info(receiver)
 
     if user_info_dict:
         # fill the template and send the email
         email_content = read_file_and_fill_template(email_recovery_file_path, user_info_dict)
-        send_email(receiver, email_content)
+        try:
+            send_email(receiver, email_content)
+        except Exception as e:
+            return str(e)
         return 'Password Recovery Email Sent Successfully'
     return 'Error - No User info Found in DB'
     
